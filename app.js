@@ -1,13 +1,23 @@
 const express = require('express');
 const app = express();
-const userSchema = require('./repository/dbConnector');
+const mongoose = require('mongoose');
+const dbSchemas = require('./repository/dbSchemas');
+
+
+main().catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect("mongodb://localhost:27017/userDb");
+  
+}
+
 
 app.route("/").get((req,res) =>{
     res.json("testing");
 })
 
 app.listen(3000, () =>{
-    console.log("server running on port 3000");
-    console.log(userSchema.time);
+    console.log(dbSchemas);
+    
 });
 
