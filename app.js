@@ -22,13 +22,18 @@ function addUser(email, password){
     newUser.save(err => {if(err){ console.log("err")} else { console.log("it worked");}});
 }
 
+function deleteUser(id){
+    const User = dbSchemas.User;
+    User.deleteOne({_id: id}, (err)=>{ if(err){ console.log("error deleting user")}});
+}
+
 
 app.route("/").get((req,res) =>{
     res.json("testing");
 })
 
 app.listen(3000, () =>{
-    addUser("Gabriel","minhaSenha");
+   console.log("server running on port 3000");
     
 });
 
