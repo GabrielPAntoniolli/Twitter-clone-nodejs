@@ -1,3 +1,5 @@
+//Starting project and authenticate users
+
 1 - Start server
 2 - Serve root page
 3 - Serve landing page if user authenticated redirect to root page
@@ -9,3 +11,8 @@
 9 - Make both facebook and google oauth on them
 10 - Session specs *** (cookies)
  
+// App main functionalities
+11 - Make profile ?
+12 - Post / Delete Tweet
+
+
