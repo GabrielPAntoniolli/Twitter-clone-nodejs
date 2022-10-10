@@ -11,15 +11,12 @@ async function main() {
   
 }
 
-
-
-
 app.route("/").get((req,res) =>{
     res.json("testing");
 })
 
 app.listen(3000, () =>{
-    controller.deleteUser("6343c27e627007941416dd13");
+    console.log("Server running on port 3000");
    
     
 });
