@@ -1,6 +1,8 @@
 const dbSchemas = require('./repository/dbSchemas');
 
 const User = dbSchemas.User;
+exports.user = User;
+
 
 exports.addUser = (email, password)=>{    
 
