@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const controller = require("./dbController");
+const controller = require("./userController");
+const bodyParser = require("body-parser");
 
 
 main().catch(err => console.log(err));
@@ -11,13 +12,39 @@ async function main() {
   
 }
 
+app.use(bodyParser.urlencoded(
+  { extended: true }
+));
+
 app.route("/").get((req,res) =>{
-    res.json("testing");
+    res.sendFile(__dirname + "/signin.html");
+});
+
+app.get("/success", (req,res)=>{
+  res.sendFile(__dirname + "success.html");
 })
+
+app.route("/v1/auth")
+  .post((req,res)=>{
+   
+    console.log(req.body);
+    let user = {
+      email: req.body.email,
+      password: req.body.password
+    };
+    console.log(controller.findUserByEmail(user.email));
+    if(controller.findUserByEmail(user.email) === true){
+      res.redirect("/success");
+    } else {
+      res.redirect("/");
+    } 
+
+});
 
 app.listen(3000, () =>{
     console.log("Server running on port 3000");
-   
+   // controller.findAllUsers();
+   //controller.addUser("gabriel99","mypass");
     
 });
 
