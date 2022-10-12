@@ -6,13 +6,14 @@ const bodyParser = require("body-parser");
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
+require('dotenv').config();
 
 const controller = new UserController();
 
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/userDb").catch(err => console.log(err));
+  await mongoose.connect(process.env.DB_CONNECTION).catch(err => console.log(err));
   
 }
 
@@ -60,35 +61,18 @@ app.get("/success", (req,res)=>{
   res.sendFile(__dirname + "/success.html");
 })
 
-// app.route("/v1/auth")
-//   .post((req,res)=>{
-   
-//     const {email, password} = req.body;
-//     let user = {
-//       email: email,
-//       password: password
-//     };
-    
-//     // console.log(controller.findUserByEmail(user.email));
-//     // if(controller.findUserByEmail(user.email) === true){
-//     //   res.redirect("/success");
-//     // } else {
-//     //   res.redirect("/");
-//     // } 
-
-// });
-
 app.post('/v1/auth', 
   passport.authenticate('local', { failureRedirect: '/' }),
   function(req, res) {
     res.redirect('/success');
   });
 
-app.listen(3000, () =>{
+app.listen(process.env.PORT || 3000, () =>{
     console.log("Server running on port 3000");
     
     //controller.findAllUsers();
    //controller.addUser("lucas","mypass");
+   
     
 });
 
