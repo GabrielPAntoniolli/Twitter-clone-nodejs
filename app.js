@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const UserController = require("./src/controller/UserController");
 const bodyParser = require("body-parser");
 
+const controller = new UserController();
 
 main().catch(err => console.log(err));
 
@@ -12,7 +13,7 @@ async function main() {
   
 }
 
-const controller = new UserController();
+
 
 app.use(bodyParser.urlencoded(
   { extended: true }
@@ -29,17 +30,18 @@ app.get("/success", (req,res)=>{
 app.route("/v1/auth")
   .post((req,res)=>{
    
-    console.log(req.body);
+    const {email, password} = req.body;
     let user = {
-      email: req.body.email,
-      password: req.body.password
+      email: email,
+      password: password
     };
-    console.log(controller.findUserByEmail(user.email));
-    if(controller.findUserByEmail(user.email) === true){
-      res.redirect("/success");
-    } else {
-      res.redirect("/");
-    } 
+    
+    // console.log(controller.findUserByEmail(user.email));
+    // if(controller.findUserByEmail(user.email) === true){
+    //   res.redirect("/success");
+    // } else {
+    //   res.redirect("/");
+    // } 
 
 });
 
