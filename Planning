@@ -1,7 +1,7 @@
 //Starting project and authenticate users
 
-1 - Start server
-2 - Serve root page
+1 - Start server - DONE
+2 - Serve root page - DONE
 3 - Serve landing page if user authenticated redirect to root page
 4 - Register page
 5 - Login page

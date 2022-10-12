@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const controller = require("./userController");
+const UserController = require("./src/controller/UserController");
 const bodyParser = require("body-parser");
 
 
@@ -11,6 +11,8 @@ async function main() {
   await mongoose.connect("mongodb://localhost:27017/userDb").catch(err => console.log(err));
   
 }
+
+const controller = new UserController();
 
 app.use(bodyParser.urlencoded(
   { extended: true }
@@ -43,8 +45,9 @@ app.route("/v1/auth")
 
 app.listen(3000, () =>{
     console.log("Server running on port 3000");
-   // controller.findAllUsers();
-   //controller.addUser("gabriel99","mypass");
+    
+    //controller.findAllUsers();
+   //controller.addUser("lucas","mypass");
     
 });
 
