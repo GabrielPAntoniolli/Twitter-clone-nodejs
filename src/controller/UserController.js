@@ -7,37 +7,58 @@ module.exports = class UserController{
     }
     
 
-    addUser = (email, password)=>{    
+    addUser(email, password){    
 
-        let newUser = new this.User({
+        const newUser = new this.User({
             email: email,
             password: password
         });
 
         
-        newUser.save(err => {if(err){ console.log(err)} else { console.log("User persisted successfully");}});
+        newUser.save((err, result) =>{
+            if(err){ 
+                throw err
+            } else { 
+                return true;
+            }}
+        );
     }
 
-    deleteUser = id =>{
+    deleteUser(id){
         
         this.User.deleteOne({_id: id}, (err)=>{ if(err){ console.log("error deleting user")}});
     }
 
-    findUserByEmail = email => { this.User.findOne({email: email}, (err, foundUser)=>{
-        if(err){
-            console.log("here");
-            return false;
-        } else {
-            if(foundUser !== null){
-                console.log("here 2");
-                return true;
-            }
-            return false;
-            console.log("here 3");
-        }
-    })}
+    /*findUserByEmail(email, cb){
+        /*if(typeof cb !== "function"){
+            throw new Error("")
 
-    findAllUsers = () => {
+        }
+         this.User.findOne({email: email}, (err, foundUser)=>{
+            if(foundUser){
+                return foundUser;
+                
+            } else {
+
+                throw err;
+            }
+    })};*/
+
+    findUserByEmail(email, cb){
+        if(typeof cb !== "function"){
+            throw new Error("A function is expected in this parameter")
+        }
+         this.User.findOne({email: email}, (err, foundUser)=>{
+            if(foundUser){
+                cb(null,foundUser);
+            } else {
+                cb(null);
+            }
+        })
+    }
+
+
+    findAllUsers(){
         this.User.find({}, (err, allUsers)=>{
             if(err){ 
                 console.log(err)

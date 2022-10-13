@@ -18,7 +18,7 @@ async function main() {
 }
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -26,7 +26,7 @@ app.use(passport.authenticate('session'));
 
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
-    cb(null, { id: user.id, username: user.username });
+    cb(null, { id: user.id, email: user.email });
   });
 });
 
@@ -39,13 +39,16 @@ passport.deserializeUser(function(user, cb) {
 
 passport.use(new LocalStrategy({usernameField: 'email'},
   function(email, password, done) {
-    controller.User.findOne({ email: email }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (user.password !== password) { return done(null, false); }
-      return done(null, user);
-    });
-  }
+        controller.findUserByEmail(email, (err,user) => { 
+          
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        if (user.password !== password) { return done(null, false);} 
+        
+        return done(null, user);
+      });
+    }
+  
 ));
 
 
@@ -69,7 +72,7 @@ app.post('/v1/auth',
 
 app.listen(process.env.PORT || 3000, () =>{
     console.log("Server running on port 3000");
-    
+    //controller.findUserByEmail("lucas");
     //controller.findAllUsers();
    //controller.addUser("lucas","mypass");
    
