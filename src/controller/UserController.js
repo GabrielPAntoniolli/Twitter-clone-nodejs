@@ -28,12 +28,11 @@ module.exports = class UserController{
                 });
                 
                 newUser.save((err, result) =>{
-                    if(err){
-                     
-                        throw err
-                        
+                    if(err){ 
+                        throw err;
                     } else { 
                         console.log(result);
+                        // when register page created, return a value;
                     }}
                 );
             }
@@ -63,8 +62,21 @@ module.exports = class UserController{
             } else {
                 cb(null);
             }
-        })
-    }
+        });
+    };
+
+    checkPassword(password, hash){
+        const result = bcrypt.compareSync(password, hash, function(err, result) {
+            if(err){
+                console.log(err);
+            } else {
+                console.log("hey");
+                //console.log(result);
+            return result;
+            }
+        });
+        return result;
+    };
 
 
     findAllUsers(){

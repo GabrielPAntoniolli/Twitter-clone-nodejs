@@ -41,11 +41,22 @@ passport.use(new LocalStrategy({usernameField: 'email'},
   function(email, password, done) {
         controller.findUserByEmail(email, (err,user) => { 
           
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (user.password !== password) { return done(null, false);} 
+        if (err) { 
+          console.log("1");
+          return done(err); 
+  
+        } else if(!user) { 
+          console.log("2");
+          return done(null, false);
+
+        } else if (controller.checkPassword(password, user.password) == false) { 
+          console.log("3");
+          return done(null, false);
         
-        return done(null, user);
+        } else { 
+          console.log(controller.checkPassword(password, user.password));
+          return done(null, user);
+        }
       });
     }
   
@@ -74,8 +85,9 @@ app.listen(process.env.PORT || 3000, () =>{
     console.log("Server running on port 3000");
     //controller.findUserByEmail("lucas");
     //controller.findAllUsers();
-   //controller.addUser("Lucas","SouGremista");
-   
+   //git dUser("Lucas","SouGremista");
+  //  let bool = controller.checkPassword("123", "$2b$10$UwLdR.fWQt5TO0nNIDoPSuJxCic1s1Lphuo24DNszLhan1/dolBQq");
+  //  console.log(bool);
     
 });
 
