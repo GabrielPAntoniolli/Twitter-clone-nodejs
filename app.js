@@ -74,7 +74,7 @@ app.listen(process.env.PORT || 3000, () =>{
     console.log("Server running on port 3000");
     //controller.findUserByEmail("lucas");
     //controller.findAllUsers();
-   //controller.addUser("lucas","mypass");
+   //controller.addUser("Lucas","SouGremista");
    
     
 });
