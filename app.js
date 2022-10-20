@@ -95,7 +95,11 @@ app.post('/v1/auth',
   });
 
 app.get("/success", (req,res)=>{
-  res.sendFile(__dirname + "/success.html");
+  if(req.isAuthenticated()){
+    res.sendFile(__dirname + "/success.html");
+  } else {
+    res.send("error 404")
+  }
 })
 
 app.listen(process.env.PORT || 3000, () =>{
