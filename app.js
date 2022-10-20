@@ -17,6 +17,10 @@ async function main() {
   
 }
 
+app.use(bodyParser.urlencoded(
+  { extended: true }
+));
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -42,19 +46,15 @@ passport.use(new LocalStrategy({usernameField: 'email'},
         controller.findUserByEmail(email, (err,user) => { 
           
         if (err) { 
-          console.log("1");
           return done(err); 
   
         } else if(!user) { 
-          console.log("2");
           return done(null, false);
 
         } else if (controller.checkPassword(password, user.password) == false) { 
-          console.log("3");
           return done(null, false);
         
         } else { 
-          console.log(controller.checkPassword(password, user.password));
           return done(null, user);
         }
       });
@@ -63,17 +63,30 @@ passport.use(new LocalStrategy({usernameField: 'email'},
 ));
 
 
-app.use(bodyParser.urlencoded(
-  { extended: true }
-));
+
 
 app.route("/").get((req,res) =>{
     res.sendFile(__dirname + "/signin.html");
 });
 
-app.get("/success", (req,res)=>{
-  res.sendFile(__dirname + "/success.html");
-})
+app.post("/register", (req, res)=> {
+
+  controller.addUser(req.body.email, req.body.password, (err,result) =>{
+
+    if(err){ 
+      console.log(err);
+      res.redirect("/register");
+    } else {
+      console.log(result);
+      passport.authenticate("local", {failureRedirect: "/register"}), (req,res)=>{
+        res.redirect("/success");
+      }
+    }
+  });
+
+});
+
+
 
 app.post('/v1/auth', 
   passport.authenticate('local', { failureRedirect: '/' }),
@@ -81,13 +94,17 @@ app.post('/v1/auth',
     res.redirect('/success');
   });
 
+app.get("/success", (req,res)=>{
+  res.sendFile(__dirname + "/success.html");
+})
+
 app.listen(process.env.PORT || 3000, () =>{
     console.log("Server running on port 3000");
-    //controller.findUserByEmail("lucas");
-    //controller.findAllUsers();
-   //git dUser("Lucas","SouGremista");
-  //  let bool = controller.checkPassword("123", "$2b$10$UwLdR.fWQt5TO0nNIDoPSuJxCic1s1Lphuo24DNszLhan1/dolBQq");
-  //  console.log(bool);
+   // controller.findUserByEmail("lucas");
+   // controller.findAllUsers();
+   // git dUser("Lucas","SouGremista");
+   // let bool = controller.checkPassword("123", "$2b$10$UwLdR.fWQt5TO0nNIDoPSuJxCic1s1Lphuo24DNszLhan1/dolBQq");
+   // console.log(bool);
     
 });
 

@@ -13,13 +13,13 @@ module.exports = class UserController{
     }
     
 
-    addUser(email, password){   
+    addUser(email, password, cb){   
         
         bcrypt.hash(password, saltRounds, (err, hash) => {
             // Store hash in your password DB.
            
             if(err){
-                console.log(err);
+                cb(err);
             } else {
                 
                 const newUser = new this.User({
@@ -29,10 +29,9 @@ module.exports = class UserController{
                 
                 newUser.save((err, result) =>{
                     if(err){ 
-                        throw err;
+                       cb(err);
                     } else { 
-                        console.log(result);
-                        // when register page created, return a value;
+                        cb(null, result);
                     }}
                 );
             }
