@@ -15,7 +15,7 @@ module.exports = class UserController{
 
     addUser(email, password, cb){   
         
-        bcrypt.hash(password, saltRounds, (err, hash) => {
+        bcrypt.hash(password, saltRounds).then( (err, hash) => {
             // Store hash in your password DB.
            
             if(err){
@@ -41,13 +41,12 @@ module.exports = class UserController{
 
     deleteUser(id){
         
-        this.User.deleteOne({_id: id}, (err, response) => { 
-            if(err){ 
-                console.log("error deleting user")
-            } else {
-                console.log(response);
-                return true;
-            }
+        this.User.deleteOne({_id: id}).exec((err, user)=>{
+           if(err){
+            console.log(err);
+           } else {
+            console.log(user);
+           }
         });
     }
 
@@ -55,7 +54,7 @@ module.exports = class UserController{
         if(typeof cb !== "function"){
             throw new Error("A function is expected in this parameter")
         }
-         this.User.findOne({email: email}, (err, foundUser)=>{
+         this.User.findOne({email: email}).then((err, foundUser)=>{
             if(foundUser){
                 cb(null,foundUser);
             } else {
@@ -79,7 +78,7 @@ module.exports = class UserController{
 
 
     findAllUsers(){
-        this.User.find({}, (err, allUsers)=>{
+        this.User.find({}).then( (err, allUsers)=>{
             if(err){ 
                 console.log(err)
             } else {

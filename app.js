@@ -109,6 +109,6 @@ app.listen(process.env.PORT || 3000, () =>{
    // git dUser("Lucas","SouGremista");
    // let bool = controller.checkPassword("123", "$2b$10$UwLdR.fWQt5TO0nNIDoPSuJxCic1s1Lphuo24DNszLhan1/dolBQq");
    // console.log(bool);
-    
+   //controller.deleteUser("634fedce116c3375fe5c3d11");
 });
 
