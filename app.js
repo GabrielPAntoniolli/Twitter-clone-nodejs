@@ -62,9 +62,6 @@ passport.use(new LocalStrategy({usernameField: 'email'},
   
 ));
 
-
-
-
 app.route("/").get((req,res) =>{
     res.sendFile(__dirname + "/signin.html");
 });

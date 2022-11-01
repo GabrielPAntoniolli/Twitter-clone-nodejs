@@ -5,13 +5,9 @@ const saltRounds = 10;
 
 module.exports = class UserController{
 
-    
-
     constructor(){
         this.User = dbSchemas.User;
-
     }
-    
 
     addUser(email, password, cb){   
         
@@ -36,16 +32,15 @@ module.exports = class UserController{
                 );
             }
         });
-       
     }
 
     deleteUser(id){
         
         this.User.deleteOne({_id: id}).exec((err, user)=>{
            if(err){
-            console.log(err);
+            throw err;
            } else {
-            console.log(user);
+            return true;
            }
         });
     }
@@ -66,7 +61,7 @@ module.exports = class UserController{
     checkPassword(password, hash){
         const result = bcrypt.compareSync(password, hash, function(err, result) {
             if(err){
-                console.log(err);
+                throw err;
             } else {
                 console.log("hey");
                 //console.log(result);
