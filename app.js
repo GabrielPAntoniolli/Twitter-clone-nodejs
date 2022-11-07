@@ -14,9 +14,7 @@ main().catch(err => console.log(err));
 
 async function main() {
   await mongoose.connect(process.env.DB_CONNECTION).catch(err => console.log(err));
-  
 }
-
 app.use(bodyParser.urlencoded(
   { extended: true }
 ));
@@ -83,8 +81,6 @@ app.post("/register", (req, res)=> {
 
 });
 
-
-
 app.post('/v1/auth', 
   passport.authenticate('local', { failureRedirect: '/' }),
   function(req, res) {
@@ -98,7 +94,6 @@ app.get("/success", (req,res)=>{
     res.send("error 404")
   }
 })
-
 app.listen(process.env.PORT || 3000, () =>{
     console.log("Server running on port 3000");
    // controller.findUserByEmail("lucas");
