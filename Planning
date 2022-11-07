@@ -1,11 +1,18 @@
-1 - Start server
-2 - Serve root page
-3 - Serve landing page if user authenticated redirect to root page
-4 - Register page
-5 - Login page
-6 - Connect Mongoose to app.js
-7 - Create Db and colletion
-8 - CRUD operations
-9 - Make both facebook and google oauth on them
-10 - Session specs *** (cookies)
+//Starting project and authenticate users
+
+1 - Start server - DONE
+2 - Serve root page - DONE
+3 - Serve landing page if user authenticated redirect to root page - DONE
+4 - Register route - DONE
+5 - Login route - DONE
+6 - Connect Mongoose to app.js - DONE
+7 - Create Db and colletion - DONE
+8 - CRUD operations - DONE
+9 - Make both facebook and google oauth on them - Hold
+10 - Session specs *** (cookies) - Hold
  
+// App main functionalities
+11 - Make profile ?
+12 - Post / Delete Tweet
+
+
